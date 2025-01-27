@@ -9,13 +9,14 @@ const userSchema = new Schema(
             required: true,
             lowercase: true,
             trim: true,
-            unique: true
+            index: true
         },
         email: {
             type: String,
             required: [true, "email is required"],
             lowercase: true,
-            unique: true
+            unique: true,
+            trim: true
         },
         fullname: {
             type: String,
@@ -31,8 +32,7 @@ const userSchema = new Schema(
         },
         password: {
             type: String,
-            required: [true, "Password is required"],
-            lowercase: true
+            required: [true, "Password is required"]
         },
         refreshToken: {
             type: String
@@ -82,7 +82,7 @@ userSchema.methods.generateRefreshToken = function () {
         },
         process.env.REFRESH_TOKEN_KEY,
         {
-            expiresIn: REFRESH_TOKEN_EXPIRE
+            expiresIn: process.env.REFRESH_TOKEN_EXPIRE
         }
     )
 }

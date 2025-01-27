@@ -1,10 +1,9 @@
 import Router from "express";
 import { upload } from "../middlewares/multer.middleware.js";
-import { registerUser } from "../controllers/user.controller.js";
+import { loginUser, logoutUser, registerUser } from "../controllers/user.controller.js";
+import { verifyJWT } from "../middlewares/auth.middleware.js";
 
 const router = Router();
-
-console.log("the control is in user router");
 
 router.route("/register").post(
     upload.fields([
@@ -19,5 +18,9 @@ router.route("/register").post(
     ]),
     registerUser
 );
+router.route("/login").post(loginUser);
+
+//safe routes
+router.route("/logout").post(verifyJWT, logoutUser);
 
 export default router 
